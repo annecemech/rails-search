@@ -1,0 +1,29 @@
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-sm-8 my-3">
+      <%= simple_form_for :filter, url: movies_path, method: :get do |f| %>
+        <div class="form-check">
+            <%= f.input :directors,
+                        collection: Director.all.map{|director| [director.full_name, director.id]},
+                        as: :check_boxes
+                        %>
+        </div>
+        <%= f.button :submit, "Filter", class: "btn btn-primary" %>
+      <% end %>
+    </div>
+  </div>
+  <div class="row justify-content-center">
+    <div class="col-sm-8">
+      <div id="movies">
+        <% if @movies.any? %>
+          <% @movies.each do |movie| %>
+            <h4><%= movie.title %> <span class="badge bg-secondary">By <%= movie.director.full_name %></span></h4>
+            <p><%= movie.synopsis %></p>
+          <% end %>
+        <% else %>
+          <em>Sorry, no movies found.</em>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
